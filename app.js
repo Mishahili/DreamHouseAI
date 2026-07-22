@@ -150,6 +150,9 @@ function changeFloor(floor){
 
     loadFloor();
 
+    
+    updateInfo();
+
 }
 
 function setMode(mode){
@@ -264,6 +267,7 @@ break;
 
 
 cell.innerHTML=symbol;
+updateInfo();
 
 
 if(currentMaterial==="marble"){
@@ -751,7 +755,7 @@ function updateInfo(){
 
 
 let objects=0;
-
+let doors=0;
 
 floors[currentFloor].forEach(row=>{
 
@@ -766,7 +770,13 @@ if(cell){
 objects++;
 
 }
+if(
+    cell.object==="door"
+){
 
+    doors++;
+
+}
 
 });
 
@@ -781,6 +791,9 @@ objects++;
 document.getElementById("objectsCount").innerHTML=
 
 "Объектов: "+objects;
+document.getElementById("roomsCount").innerHTML =
+
+"Комнат: "+detectRooms();
 
 
 
@@ -789,6 +802,158 @@ document.getElementById("info").innerHTML=
 "Этаж: "+currentFloor+
 "<br>Площадь: "+
 (objects*5)+" м²";
+document.getElementById("doorsCount").innerHTML =
 
+"Дверей: "+doors;
+
+}
+
+function detectRooms(){
+
+    let rooms = 0;
+
+
+    let visited = [];
+
+
+    for(let y = 0; y < gridSize; y++){
+
+        visited[y]=[];
+
+        for(let x = 0; x < gridSize; x++){
+
+            visited[y][x]=false;
+
+        }
+
+    }
+
+
+
+    function check(x,y){
+
+
+        if(
+            x<0 ||
+            y<0 ||
+            x>=gridSize ||
+            y>=gridSize
+        ){
+
+            return false;
+
+        }
+
+
+
+        if(visited[y][x]){
+
+            return false;
+
+        }
+
+
+
+        if(
+    map[y] &&
+    map[y][x]
+){
+
+    let obj =
+    map[y][x].object;
+
+
+    if(
+        obj==="wall"
+    ){
+
+        return false;
+
+    }
+
+        }
+
+
+
+        return true;
+
+    }
+
+
+
+
+
+
+    function flood(x,y){
+
+
+        if(!check(x,y)){
+
+            return;
+
+        }
+
+
+        visited[y][x]=true;
+
+
+        flood(x+1,y);
+
+        flood(x-1,y);
+
+        flood(x,y+1);
+
+        flood(x,y-1);
+
+
+    }
+
+
+
+
+
+
+    for(let y=0;y<gridSize;y++){
+
+
+        for(let x=0;x<gridSize;x++){
+
+
+            if(check(x,y)){
+
+
+                rooms++;
+
+
+                flood(x,y);
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+    return rooms;
+
+}
+function isDoor(x,y){
+
+
+    if(
+        map[y] &&
+        map[y][x]
+    ){
+
+        return map[y][x].object==="door";
+
+    }
+
+
+    return false;
 
 }
