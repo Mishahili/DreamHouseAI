@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DreamHouse AI v2</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🏠 DreamHouse AI</h1>
+
+<p>Конструктор дома мечты</p>
+
+</header>
+
+
+
+<main>
+
+
+<section class="panel">
+
+<h2>Размер дома</h2>
+
+<button onclick="createHouse(100)">
+🏠 100 м²
+</button>
+
+
+<button onclick="createHouse(250)">
+🏡 250 м²
+</button>
+
+
+<button onclick="createHouse(500)">
+🏰 500 м²
+</button>
+
+
+<button onclick="createHouse(1000)">
+🏯 1000 м²
+</button>
+
+
+</section>
+
+
+
+
+
+<section class="panel">
+
+
+<h2>Строительство</h2>
+
+
+<button onclick="addRoom('Гостиная')">
+🛋 Гостиная
+</button>
+
+
+<button onclick="addRoom('Кухня')">
+🍳 Кухня
+</button>
+
+
+<button onclick="addRoom('Спальня')">
+🛏 Спальня
+</button>
+
+
+<button onclick="addRoom('Бассейн')">
+🏊 Бассейн
+</button>
+
+
+<button onclick="addRoom('Спортзал')">
+🏋️ Спортзал
+</button>
+
+
+</section>
+
+
+
+
+
+
+<section class="panel">
+
+
+<h2>Мебель</h2>
+
+
+<button onclick="addFurniture('🛋')">
+Диван
+</button>
+
+
+<button onclick="addFurniture('🛏')">
+Кровать
+</button>
+
+
+<button onclick="addFurniture('📺')">
+Телевизор
+</button>
+
+
+<button onclick="addFurniture('🖥')">
+Компьютер
+</button>
+
+
+</section>
+
+
+
+
+
+
+<section class="panel">
+
+
+<h2>Ваш дом</h2>
+
+
+<div id="house">
+
+Создайте дом
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="panel">
+
+
+<h2>🤖 AI Дизайнер</h2>
+
+
+<select id="style">
+
+<option>
+Современный
+</option>
+
+<option>
+Классический
+</option>
+
+<option>
+Люкс
+</option>
+
+</select>
+
+
+
+<button onclick="generateDesign()">
+
+Создать дизайн
+
+</button>
+
+
+
+<p id="aiResult"></p>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section class="panel">
+
+
+<h2>💰 Стоимость</h2>
+
+
+<h2 id="price">
+0 $
+</h2>
+
+
+
+<button onclick="saveProject()">
+💾 Сохранить
+</button>
+
+
+
+<button onclick="loadProject()">
+📂 Загрузить
+</button>
+
+
+</section>
+
+
+
+</main>
+
+
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
