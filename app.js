@@ -3,9 +3,47 @@
 
 
 let currentMode = "wall";
+let currentMaterial = "stone";
+
+
+const materials = {
+
+    stone:{
+        name:"Камень",
+        price:1500
+    },
+
+    marble:{
+        name:"Мрамор",
+        price:3000
+    },
+
+    wood:{
+        name:"Дерево",
+        price:1000
+    },
+
+    glass:{
+        name:"Стекло",
+        price:2500
+    }
+
+};
+
 
 
 let gridSize = 10;
+let currentFloor = 1;
+
+
+let floors = {
+
+    "-1":[],
+    "1":[],
+    "2":[],
+    "3":[]
+
+};
 
 
 let map = [];
@@ -97,8 +135,34 @@ function createGrid(){
 
 // выбор инструмента
 
+function changeFloor(floor){
+
+    currentFloor = floor;
+
+
+    if(!floors[floor]){
+        floors[floor]=[];
+    }
+
+
+    createGrid();
+
+
+    loadFloor();
+
+}
 
 function setMode(mode){
+    function setMaterial(material){
+
+    currentMaterial = material;
+
+    alert(
+        "Выбран материал: "+
+        materials[material].name
+    );
+
+    }
 
 
     currentMode=mode;
@@ -197,10 +261,37 @@ break;
 
 
 
-map[y][x]=symbol;
 
 
 cell.innerHTML=symbol;
+
+
+if(currentMaterial==="marble"){
+
+cell.style.background="#eeeeee";
+
+}
+
+
+if(currentMaterial==="wood"){
+
+cell.style.background="#b87535";
+
+}
+
+
+if(currentMaterial==="stone"){
+
+cell.style.background="#777";
+
+}
+
+
+if(currentMaterial==="glass"){
+
+cell.style.background="#8eeaff";
+
+}
 
 
 house.price+=cost;
@@ -208,6 +299,44 @@ house.price+=cost;
 
 updatePrice();
 
+    if(!floors[currentFloor]){
+
+    floors[currentFloor]=[];
+
+}
+
+
+if(!floors[currentFloor][y]){
+
+    floors[currentFloor][y]=[];
+
+}
+
+
+floors[currentFloor][y][x]={
+
+    object: currentMode,
+
+    material: currentMaterial,
+
+    icon:symbol
+
+};
+
+
+map[y][x]=floors[currentFloor][y][x];
+
+    object: currentMode,
+
+    material: currentMaterial,
+
+    icon: symbol
+
+};
+
+
+house.price += 
+materials[currentMaterial].price;
 
 
 }
@@ -464,6 +593,48 @@ map=data.map;
 
 loadMap();
 
+    function loadFloor(){
+
+    map=[];
+
+
+    if(floors[currentFloor]){
+
+        map=floors[currentFloor];
+
+    }
+
+
+    let cells=
+    document.querySelectorAll(".cell");
+
+
+    cells.forEach(cell=>{
+
+
+        let x=cell.dataset.x;
+
+        let y=cell.dataset.y;
+
+
+        if(map[y] && map[y][x]){
+
+            cell.innerHTML=
+            map[y][x].icon;
+
+        }
+        else{
+
+            cell.innerHTML="";
+
+        }
+
+
+    });
+
+
+    }
+
 
 
 updatePrice();
@@ -490,10 +661,37 @@ let x=cell.dataset.x;
 let y=cell.dataset.y;
 
 
-cell.innerHTML=
+if(map[y][x]){
 
-map[y][x];
+    cell.innerHTML =
+map[y][x].icon;
 
+
+let material =
+map[y][x].material;
+
+
+if(material==="marble")
+cell.style.background="#eeeeee";
+
+
+if(material==="wood")
+cell.style.background="#b87535";
+
+
+if(material==="stone")
+cell.style.background="#777";
+
+
+if(material==="glass")
+cell.style.background="#8eeaff";
+
+}
+else{
+
+    cell.innerHTML="";
+
+}
 
 });
 
