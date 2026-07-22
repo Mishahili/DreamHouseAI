@@ -1,1 +1,319 @@
+*{
+    box-sizing:border-box;
+    font-family:"Segoe UI", Arial, sans-serif;
+}
 
+
+body{
+
+    margin:0;
+    background:
+    linear-gradient(135deg,#0f1720,#1b3445);
+
+    color:white;
+}
+
+
+
+header{
+
+    text-align:center;
+    padding:40px 20px;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+header h1{
+
+    font-size:48px;
+    margin:0;
+
+}
+
+
+header p{
+
+    font-size:20px;
+    opacity:0.8;
+
+}
+
+
+
+
+main{
+
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+
+}
+
+
+
+
+.panel{
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.3);
+
+}
+
+
+
+
+h2{
+
+    margin-top:0;
+
+}
+
+
+
+
+
+button{
+
+    background:
+
+    linear-gradient(
+    135deg,
+    #00d4a8,
+    #00a878
+    );
+
+
+    border:none;
+
+    color:white;
+
+    padding:15px 25px;
+
+    margin:8px;
+
+    border-radius:15px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px #00d4a855;
+
+}
+
+
+
+
+#house{
+
+
+    min-height:400px;
+
+    border-radius:25px;
+
+
+    background:
+
+    linear-gradient(
+    135deg,
+    #d8c3a5,
+    #eee
+    );
+
+
+    color:#222;
+
+
+    padding:25px;
+
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    align-content:flex-start;
+
+
+    gap:10px;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+.room{
+
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    color:#222;
+
+    box-shadow:
+
+    0 5px 15px #0003;
+
+
+    animation:appear .5s;
+
+
+}
+
+
+
+
+.item{
+
+    font-size:45px;
+
+    animation:appear .5s;
+
+}
+
+
+
+
+
+select{
+
+    padding:12px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+#price{
+
+
+    color:#00ffb3;
+
+    font-size:35px;
+
+}
+
+
+
+
+#aiResult{
+
+
+    background:
+
+    rgba(0,0,0,.2);
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+
+
+
+
+@keyframes appear{
+
+
+from{
+
+opacity:0;
+
+transform:scale(.7);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+
+}
+
+
+
+
+
+
+@media(max-width:700px){
+
+
+header h1{
+
+font-size:32px;
+
+}
+
+
+
+button{
+
+width:100%;
+
+margin:5px 0;
+
+}
+
+
+
+.panel{
+
+padding:15px;
+
+}
+
+
+
+#house{
+
+min-height:350px;
+
+}
+
+
+
+}
