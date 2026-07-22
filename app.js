@@ -746,3 +746,49 @@ updatePrice();
 
 
 };
+
+function updateInfo(){
+
+
+let objects=0;
+
+
+floors[currentFloor].forEach(row=>{
+
+
+if(row){
+
+row.forEach(cell=>{
+
+
+if(cell){
+
+objects++;
+
+}
+
+
+});
+
+
+}
+
+
+});
+
+
+
+document.getElementById("objectsCount").innerHTML=
+
+"Объектов: "+objects;
+
+
+
+document.getElementById("info").innerHTML=
+
+"Этаж: "+currentFloor+
+"<br>Площадь: "+
+(objects*5)+" м²";
+
+
+}
