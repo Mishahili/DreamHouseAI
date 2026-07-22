@@ -1,17 +1,23 @@
-// DreamHouse AI v2.0
-// Основная логика
+// DreamHouse AI v3.0
+// 2D Builder Engine
+
+
+let currentMode = "wall";
+
+
+let gridSize = 10;
+
+
+let map = [];
+
 
 
 let house = {
 
     size:0,
-
     rooms:[],
-
     furniture:[],
-
     style:"Современный",
-
     price:0
 
 };
@@ -19,58 +25,237 @@ let house = {
 
 
 
+// создание карты
 
-const roomPrices = {
-
-    "Гостиная":50000,
-
-    "Кухня":40000,
-
-    "Спальня":45000,
-
-    "Бассейн":150000,
-
-    "Спортзал":100000
-
-};
+function createGrid(){
 
 
+    let grid=document.getElementById("grid");
 
 
-const furniturePrices = {
+    if(!grid) return;
 
-    "🛋":5000,
 
-    "🛏":7000,
+    grid.innerHTML="";
 
-    "📺":4000,
 
-    "🖥":3000
-
-};
+    map=[];
 
 
 
+    for(let y=0;y<gridSize;y++){
+
+
+        map[y]=[];
+
+
+        for(let x=0;x<gridSize;x++){
+
+
+            map[y][x]="";
+
+
+            let cell=document.createElement("div");
+
+
+            cell.className="cell";
+
+
+            cell.dataset.x=x;
+
+            cell.dataset.y=y;
 
 
 
+            cell.onclick=function(){
 
-function createHouse(size){
+                build(
+                    x,
+                    y,
+                    cell
+                );
+
+            };
 
 
-    house.size=size;
+
+            grid.appendChild(cell);
 
 
-    house.price=size*2000;
+        }
 
 
-    render();
+    }
+
 
 
 }
 
 
 
+
+
+// выбор инструмента
+
+
+function setMode(mode){
+
+
+    currentMode=mode;
+
+
+    alert(
+    "Выбран режим: "+mode
+    );
+
+
+}
+
+
+
+
+
+// строительство
+
+
+function build(x,y,cell){
+
+
+
+let symbol="";
+
+let cost=0;
+
+
+
+
+switch(currentMode){
+
+
+
+case "wall":
+
+symbol="🧱";
+
+cost=500;
+
+break;
+
+
+
+case "door":
+
+symbol="🚪";
+
+cost=2000;
+
+break;
+
+
+
+case "window":
+
+symbol="🪟";
+
+cost=3000;
+
+break;
+
+
+
+case "sofa":
+
+symbol="🛋";
+
+cost=5000;
+
+break;
+
+
+
+case "bed":
+
+symbol="🛏";
+
+cost=7000;
+
+break;
+
+
+
+case "tree":
+
+symbol="🌳";
+
+cost=1000;
+
+break;
+
+
+
+}
+
+
+
+map[y][x]=symbol;
+
+
+cell.innerHTML=symbol;
+
+
+house.price+=cost;
+
+
+updatePrice();
+
+
+
+}
+
+
+
+
+
+// цена
+
+
+function updatePrice(){
+
+
+let price=document.getElementById("price");
+
+
+if(price){
+
+price.innerHTML=
+house.price.toLocaleString()+" $";
+
+}
+
+
+}
+
+
+
+
+
+// старые функции дома
+
+
+
+function createHouse(size){
+
+
+house.size=size;
+
+
+house.price=size*2000;
+
+
+updatePrice();
+
+
+}
 
 
 
@@ -79,19 +264,16 @@ function createHouse(size){
 function addRoom(room){
 
 
-    house.rooms.push(room);
+house.rooms.push(room);
 
 
-    house.price += roomPrices[room];
+house.price+=50000;
 
 
-    render();
+updatePrice();
 
 
 }
-
-
-
 
 
 
@@ -100,13 +282,13 @@ function addRoom(room){
 function addFurniture(item){
 
 
-    house.furniture.push(item);
+house.furniture.push(item);
 
 
-    house.price += furniturePrices[item];
+house.price+=5000;
 
 
-    render();
+updatePrice();
 
 
 }
@@ -117,180 +299,79 @@ function addFurniture(item){
 
 
 
-
-
-function render(){
-
-
-    let area=document.getElementById("house");
-
-
-    area.innerHTML="";
-
-
-
-    if(house.size){
-
-
-        let title=document.createElement("h2");
-
-        title.innerHTML=
-        "🏠 Дом "+house.size+" м²";
-
-
-        area.appendChild(title);
-
-
-    }
-
-
-
-    house.rooms.forEach(room=>{
-
-
-        let div=document.createElement("div");
-
-
-        div.className="room";
-
-
-        div.innerHTML=
-        "🏠 "+room;
-
-
-        area.appendChild(div);
-
-
-
-    });
-
-
-
-
-
-
-
-    house.furniture.forEach(item=>{
-
-
-        let div=document.createElement("div");
-
-
-        div.className="item";
-
-
-        div.innerHTML=item;
-
-
-        area.appendChild(div);
-
-
-    });
-
-
-
-
-    document.getElementById("price").innerHTML=
-
-    house.price.toLocaleString()+" $";
-
-
-}
-
-
-
-
-
-
+// AI дизайн
 
 
 
 function generateDesign(){
 
 
-
-    let style=
-
-    document.getElementById("style").value;
+let style=document.getElementById("style").value;
 
 
 
-    house.style=style;
+let text="";
 
 
 
-    let result="";
+if(style==="Современный"){
+
+
+text=
+`
+🏠 Современный дом:
+
+• Панорамные окна
+• Большая кухня-гостиная
+• Умный дом
+• Минимализм
+• Светлый интерьер
+
+`;
+
+}
 
 
 
-
-    if(style==="Современный"){
-
-
-        result=
-        `
-        🏠 Современный дизайн:
-
-        • Панорамные окна
-        • Минимализм
-        • Умный дом
-        • Светлые стены
-        • Большая кухня-гостиная
-        `;
+if(style==="Классический"){
 
 
-    }
+text=
+`
+🏛 Классический дом:
 
+• Дерево
+• Камень
+• Библиотека
+• Камин
+• Большие комнаты
+
+`;
+
+}
 
 
 
-
-    if(style==="Классический"){
-
-
-        result=
-
-        `
-        🏛 Классический дизайн:
-
-        • Дерево
-        • Мрамор
-        • Большая библиотека
-        • Камин
-        • Классическая мебель
-        `;
+if(style==="Люкс"){
 
 
-    }
+text=
+`
+💎 Люкс:
+
+• Мрамор
+• SPA
+• Кинотеатр
+• Бассейн
+• Лифт
+
+`;
+
+}
 
 
 
-
-
-
-
-    if(style==="Люкс"){
-
-
-        result=
-
-        `
-        💎 Люкс дизайн:
-
-        • Мраморные полы
-        • Домашний кинотеатр
-        • Бассейн
-        • SPA
-        • Золотые детали
-        `;
-
-
-    }
-
-
-
-    document.getElementById("aiResult").innerHTML=result;
-
+document.getElementById("aiResult").innerHTML=text;
 
 
 }
@@ -299,28 +380,37 @@ function generateDesign(){
 
 
 
-
-
+// сохранение
 
 
 function saveProject(){
 
 
 
-    localStorage.setItem(
+let data={
 
-        "DreamHouseAI",
+house:house,
 
-        JSON.stringify(house)
+map:map
 
-    );
+};
 
 
-    alert(
 
-    "🏠 Проект сохранён"
+localStorage.setItem(
 
-    );
+"DreamHouseAI",
+
+JSON.stringify(data)
+
+);
+
+
+
+alert(
+"Дом сохранён"
+);
+
 
 
 }
@@ -330,6 +420,8 @@ function saveProject(){
 
 
 
+
+// загрузка
 
 
 
@@ -337,48 +429,44 @@ function loadProject(){
 
 
 
-    let saved=
+let data=
 
-    localStorage.getItem(
+JSON.parse(
 
-        "DreamHouseAI"
+localStorage.getItem(
 
-    );
+"DreamHouseAI"
 
+)
 
-
-    if(!saved){
-
-
-        alert(
-
-        "Нет сохранённых домов"
-
-        );
-
-
-        return;
-
-
-    }
+);
 
 
 
-    house=
+if(!data){
 
-    JSON.parse(saved);
+alert(
+"Сохранений нет"
+);
+
+return;
+
+}
 
 
 
-    render();
+house=data.house;
+
+
+map=data.map;
 
 
 
-    alert(
+loadMap();
 
-    "Дом загружен"
 
-    );
+
+updatePrice();
 
 
 
@@ -388,33 +476,75 @@ function loadProject(){
 
 
 
+function loadMap(){
 
-// Автозагрузка при открытии сайта
+
+let cells=document.querySelectorAll(".cell");
+
+
+cells.forEach(cell=>{
+
+
+let x=cell.dataset.x;
+
+let y=cell.dataset.y;
+
+
+cell.innerHTML=
+
+map[y][x];
+
+
+});
+
+
+}
+
+
+
+
+
 
 window.onload=function(){
 
 
-    let saved=
-
-    localStorage.getItem(
-
-    "DreamHouseAI"
-
-    );
+createGrid();
 
 
-    if(saved){
+let saved=
+
+localStorage.getItem(
+
+"DreamHouseAI"
+
+);
 
 
-        house=
 
-        JSON.parse(saved);
-
-
-        render();
+if(saved){
 
 
-    }
+let data=
+
+JSON.parse(saved);
+
+
+
+house=data.house;
+
+
+map=data.map;
+
+
+
+loadMap();
+
+
+updatePrice();
+
+
+}
+
 
 
 };
